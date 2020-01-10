@@ -1,5 +1,4 @@
 
-# TODO import libraries
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
@@ -17,28 +16,41 @@ soup = BeautifulSoup(page.content, 'html.parser')
 
 offer_items = soup.find_all('div', class_="offer-item-details")
 
-titles = soup.find_all('span', class_="offer-item-title")
 
-soup.select()
+# Links
+links = [a['href'] for a in soup.find_all('a', href = True) if a.parent.name == 'h3']
 
-# Linki
-for a in soup.find_all('a', href = True):
-    if a.parent.name == 'h3':
-        print(a['href'])
+# titles
+titles = [t.get_text() for t in soup.find_all('span', class_="offer-item-title")]
 
-# tytuł
-
-
+# TODO split lines
 # dzielnica
-
+districts = [dist.get_text() for dist in soup.find_all('p', class_="text-nowrap")]
 
 # cena
-
+prices = [p.get_text() for p in soup.find_all('li', class_="offer-item-price")]
 
 # pokoje
-
+rooms = [r.get_text() for r in soup.find_all('li', class_="offer-item-rooms hidden-xs")]
 
 # m2
+sqr_meters = [m.get_text() for m in soup.find_all('li', class_="hidden-xs offer-item-area")]
 
 
+# TODO split lines in districts
+# TODO polish letters encoding przykladowy_string.encode("utf-8")
+# TODO leave only float in sqr metters
+# TODO prices
 
+sqr_meters
+
+results = pd.DataFrame({
+    'title': titles,
+    'prices': prices,
+    'district': districts,
+    'rooms': rooms,
+    'sqr_meters': sqr_meters,
+    'url_adress': links})
+
+
+results.to_csv('oto_dom_scrap.csv')
