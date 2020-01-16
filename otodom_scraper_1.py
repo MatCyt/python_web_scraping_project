@@ -3,7 +3,14 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 
-# TODO limit number of pages sent
+
+
+# TODO split lines in districts
+# TODO polish letters encoding przykladowy_string.encode("utf-8")
+# TODO leave only float in sqr metters
+# TODO prices
+# TODO scrap multiple pages (set all pages to be scrapped? data, last sent?)
+
 
 
 # URL
@@ -23,7 +30,6 @@ links = [a['href'] for a in soup.find_all('a', href = True) if a.parent.name == 
 # titles
 titles = [t.get_text() for t in soup.find_all('span', class_="offer-item-title")]
 
-# TODO split lines
 # dzielnica
 districts = [dist.get_text() for dist in soup.find_all('p', class_="text-nowrap")]
 
@@ -36,14 +42,7 @@ rooms = [r.get_text() for r in soup.find_all('li', class_="offer-item-rooms hidd
 # m2
 sqr_meters = [m.get_text() for m in soup.find_all('li', class_="hidden-xs offer-item-area")]
 
-
-# TODO split lines in districts
-# TODO polish letters encoding przykladowy_string.encode("utf-8")
-# TODO leave only float in sqr metters
-# TODO prices
-
-sqr_meters
-
+# save to csv
 results = pd.DataFrame({
     'title': titles,
     'prices': prices,
