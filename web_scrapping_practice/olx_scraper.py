@@ -42,6 +42,10 @@ for offer in offer_items:
     price = int(price_raw[:-2].replace(" ", ""))
     prices.append(price)
 
+links
+titles
+district
+prices
 
 # SAVE TO CSV
 results = pd.DataFrame({

@@ -42,6 +42,7 @@ rooms = [r.get_text() for r in soup.find_all('li', class_="offer-item-rooms hidd
 # m2
 sqr_meters = [m.get_text() for m in soup.find_all('li', class_="hidden-xs offer-item-area")]
 
+
 # save to csv
 results = pd.DataFrame({
     'title': titles,
